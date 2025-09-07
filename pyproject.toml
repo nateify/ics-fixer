@@ -1,6 +1,6 @@
 [project]
 name = "ics-fixer"
-version = "1.0"
+version = "1.0.1"
 description = "Fix slightly broken iCalendar files"
 readme = "README.md"
 authors = [
