@@ -5,6 +5,7 @@ import uuid
 from datetime import UTC, datetime, timedelta
 from itertools import dropwhile
 from pathlib import Path
+from typing import Annotated
 
 import dateparser
 import ftfy
@@ -189,26 +190,32 @@ app = typer.Typer()
 
 @app.command()
 def main(
-    input_file: Path = typer.Argument(
-        ...,
-        exists=True,
-        file_okay=True,
-        dir_okay=False,
-        readable=True,
-        resolve_path=True,
-        help="Path to the input ICS file.",
-    ),
-    output_file: Path | None = typer.Argument(
-        None,
-        help="Path for the output file. If omitted, the input file is overwritten.",
-        resolve_path=True,
-    ),
-    skip_mojibake_fix: bool = typer.Option(
-        False,
-        "--skip-mojibake-fix",
-        help="Do not run the mojibake (garbled text) fixer.",
-    ),
-    debug: bool = typer.Option(False, "--debug", help="Enable debug logging."),
+    input_file: Annotated[
+        Path,
+        typer.Argument(
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            readable=True,
+            resolve_path=True,
+            help="Path to the input ICS file.",
+        ),
+    ],
+    output_file: Annotated[
+        Path | None,
+        typer.Argument(
+            help="Path for the output file. If omitted, the input file is overwritten.",
+            resolve_path=True,
+        ),
+    ] = None,
+    skip_mojibake_fix: Annotated[
+        bool,
+        typer.Option(
+            "--skip-mojibake-fix",
+            help="Do not run the mojibake (garbled text) fixer.",
+        ),
+    ] = False,
+    debug: Annotated[bool, typer.Option("--debug", help="Enable debug logging.")] = False,
 ):
     # Configure logging
     log_level = logging.DEBUG if debug else logging.INFO
@@ -227,6 +234,7 @@ def main(
 
     try:
         cal = Calendar.from_ical(ics_content)
+        assert isinstance(cal, Calendar), "Expected Calendar object"
     except Exception as e:
         logging.error(f"Error parsing ICS file: {e}")
         logging.debug("Traceback:", exc_info=True)

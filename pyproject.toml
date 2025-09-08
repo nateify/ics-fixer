@@ -1,6 +1,6 @@
 [project]
 name = "ics-fixer"
-version = "1.0.1"
+version = "1.0.2"
 description = "Fix slightly broken iCalendar files"
 readme = "README.md"
 authors = [
@@ -17,7 +17,8 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Topic :: Utilities",
 ]
-license = {file = "LICENSE"}
+license = "MIT"
+license-files = ["LICENSE"]
 dependencies = [
     "dateparser>=1.2.2",
     "ftfy>=6.3.1",

@@ -47,8 +47,7 @@ If the start and end time are equal and contain the time, the end time will be s
 
 * Unit tests
 * Support for older Python versions
-* Timezone shifter for dates incorrectly assumed as UTC
-* Force all-day mode for events with same start and end time
+* Timezone shifter for source files with incorrect times
 * Better fixes for malformed `ORGANIZER` or `ATTENDEE`
   * I would need real world sample data
 
